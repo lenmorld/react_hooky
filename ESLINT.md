@@ -46,3 +46,7 @@ npm install --save-dev eslint-plugin-react eslint-plugin-react-hooks
 ```bash
 $ npm install @babel/core @babel/preset-env @babel/preset-react
 ```
+
+# Resource:
+
+https://thomlom.dev/setup-eslint-prettier-react/
