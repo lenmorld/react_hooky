@@ -35,14 +35,16 @@ const getIcon = (charging, level) => {
 
   return (
     <IconContext.Provider value={{ size: "40rem" }}>
-      <div style={{ position: "absolute" }}>{charging && <FcChargeBattery />}</div>
+      <div style={{ position: "absolute" }}>
+        {charging && <FcChargeBattery />}
+      </div>
       <div style={{ opacity: charging ? "0.5" : "1" }}>{levelIcon}</div>
     </IconContext.Provider>
   )
 }
 
-// export default class Battery extends React.Component {
-export default function Battery() {
+// custom hook
+const useBattery = () => {
   const [charging, setCharging] = useState(false)
   const [level, setLevel] = useState(0)
 
@@ -76,6 +78,13 @@ export default function Battery() {
     }
   }, []) // only run on mount and unmount
 
+  return [charging, level]
+}
+
+// export default class Battery extends React.Component {
+export default function Battery() {
+  const [charging, level] = useBattery()
+
   return (
     <div
       style={{
@@ -87,7 +96,7 @@ export default function Battery() {
     >
       {getIcon(charging, level)}
       <div style={{ fontSize: "4rem", position: "absolute", bottom: "4rem" }}>
-        {level * 100}%
+        <span>{`${level * 100}%`}</span>
       </div>
     </div>
   )
