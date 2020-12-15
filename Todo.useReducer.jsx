@@ -1,8 +1,53 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useReducer } from "react"
+
+const ADD_TODO = "ADD_TODO"
+const UPDATE_TODO = "UPDATE_TODO"
+const DELETE_TODO = "DELETE_TODO"
+
+function todosReducer (todos, action) {
+
+  const { type, text, id } = action
+
+  switch(type) {
+    case ADD_TODO: {
+      return [
+          ...todos,
+          {
+            id: Date.now(),
+            text,
+            completed: false,
+          },
+        ]
+      break;
+    }
+
+    case UPDATE_TODO: {
+      return todos.map((todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            completed: !todo.completed,
+          }
+        }
+        return todo
+      })
+    }
+
+    case DELETE_TODO: {
+      return todos.filter((todo) => todo.id !== id)
+    }
+
+    default: {
+      throw new Error("unknown action")
+    }
+  }
+}
 
 export default function Todo() {
-  const [todos, setTodos] = useState([])
+  // const [todos, setTodos] = useState([])
   const [newTodo, setNewTodo] = useState("")
+
+  const [todos, dispatch] = useReducer(todosReducer, [])
 
   const handleKeyDown = (e) => {
     console.log(e)
@@ -23,14 +68,9 @@ export default function Todo() {
     console.log(e)
 
     // add one
-    setTodos((prevTodos) => [
-      ...todos,
-      {
-        id: Date.now(),
-        text: newTodo,
-        completed: false,
-      },
-    ])
+    dispatch({ type: ADD_TODO,
+      text: newTodo
+    })
   }
 
   const handleNewChange = (e) => {
@@ -39,22 +79,12 @@ export default function Todo() {
 
   const handleCompletedToggle = (id, e) => {
     // Update one
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            completed: !todo.completed,
-          }
-        }
-        return todo
-      }),
-    )
+    dispatch({ type: UPDATE_TODO, id })
   }
 
   const handleDelete = (id, e) => {
     // Delete one
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id))
+    dispatch({ type: DELETE_TODO, id })
   }
 
   return (
