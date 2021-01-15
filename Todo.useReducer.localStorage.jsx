@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from "react"
+import React, { useState, useEffect, useReducer, useMemo } from "react"
 
 const ADD_TODO = "ADD_TODO"
 const UPDATE_TODO = "UPDATE_TODO"
@@ -41,11 +41,34 @@ function todosReducer(todos, action) {
   }
 }
 
+const useTodosWithLocalStorage = (defaultValue) => {
+  const initialValue = () => {
+    const valueFromStorage = JSON.parse(
+      window.localStorage.getItem("todos") || JSON.stringify(defaultValue),
+    )
+    // TODO: max id
+    return valueFromStorage
+  }
+
+  // useReducer doesnt support function! unline useState 😢
+  // const [todos, dispatch] = useReducer(todosReducer, initialValue)
+
+  // -> useMemo
+  const [todos, dispatch] = useReducer(todosReducer, useMemo(initialValue, []))
+
+  // save back to localStorage when todos change
+  useEffect(() => {
+    window.localStorage.setItem("todos", JSON.stringify(todos))
+  }, [todos])
+
+  return [todos, dispatch]
+}
+
 export default function Todo() {
   // const [todos, setTodos] = useState([])
   const [newTodo, setNewTodo] = useState("")
 
-  const [todos, dispatch] = useReducer(todosReducer, [])
+  const [todos, dispatch] = useTodosWithLocalStorage([])
 
   const handleKeyDown = (e) => {
     console.log(e)
@@ -102,7 +125,14 @@ export default function Todo() {
               checked={todo.completed}
               onChange={(e) => handleCompletedToggle(todo.id, e)}
             />
-            {todo.text}
+            <span
+              style={{
+                textDecoration: todo.completed ? "line-through" : "none",
+              }}
+            >
+              {todo.text}
+            </span>
+
             <button onClick={(e) => handleDelete(todo.id, e)}>X</button>
           </li>
         ))}
