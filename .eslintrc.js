@@ -4,20 +4,21 @@ module.exports = {
     es2021: true,
   },
   extends: [
-    'plugin:react/recommended',
-    'airbnb',
-    'plugin:prettier/recommended',
-    'plugin:react-hooks/recommended',
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended",
   ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
     ecmaVersion: 12,
-    sourceType: 'module',
+    sourceType: "module",
   },
-  plugins: ['react', 'prettier'],
+  plugins: ["react", "prettier"],
   rules: {
-    'prettier/prettier': 'error',
+    "prettier/prettier": "error",
+    "react/prefer-stateless-function": "off",
   },
 }
