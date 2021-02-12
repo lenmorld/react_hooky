@@ -13,6 +13,8 @@ import SomeFunction from "./SomeFunction"
 
 import ThemeContext from "./ThemeContext"
 
+import PureComponenty from "./PureComponenty"
+
 const Container = ({ children }) => {
   return <div>{children}</div>
 }
@@ -55,6 +57,9 @@ class App extends React.Component {
           <hr/>
           <SomeFunction />
           <Todo />
+          
+          <hr/>
+          <PureComponenty />
         </Container>
       </ThemeContext.Provider>
     )

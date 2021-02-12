@@ -71,7 +71,7 @@ export default function Todo() {
   const [todos, dispatch] = useTodosWithLocalStorage([])
 
   const handleKeyDown = (e) => {
-    console.log(e)
+    // console.log(e)
   }
 
   useEffect(() => {
@@ -86,7 +86,7 @@ export default function Todo() {
 
   const handleNewSubmit = (e) => {
     e.preventDefault()
-    console.log(e)
+    // console.log(e)
 
     // add one
     dispatch({ type: ADD_TODO, text: newTodo })

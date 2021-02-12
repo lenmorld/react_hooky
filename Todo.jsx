@@ -5,7 +5,7 @@ export default function Todo() {
   const [newTodo, setNewTodo] = useState("")
 
   const handleKeyDown = (e) => {
-    console.log(e)
+    // console.log(e)
   }
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function Todo() {
 
   const handleNewSubmit = (e) => {
     e.preventDefault()
-    console.log(e)
+    // console.log(e)
 
     // add one
     setTodos((prevTodos) => [

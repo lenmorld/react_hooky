@@ -8,6 +8,7 @@ module.exports = {
     "airbnb",
     "plugin:prettier/recommended",
     "plugin:react-hooks/recommended",
+    "prettier/react",
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -20,5 +21,6 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
     "react/prefer-stateless-function": "off",
+    "max-classes-per-file": "off",
   },
 }
